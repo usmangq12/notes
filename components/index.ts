@@ -1,2 +1,2 @@
-export * from "./Appbar";
+export * from "./NavBar";
 export * from "./List";

@@ -4,16 +4,16 @@ import { Button } from "@react-native-material/core";
 import { TextArea } from "../shared";
 import { NoteContext } from "../App";
 
-export const AddNote = () => {
-  const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
-  const { notes, setNotes } = useContext<any>(NoteContext);
+export const AddNote = ({ navigation: { goBack } }: any) => {
+  const { title, note, notes, setNotes, setTitle, setNote } =
+    useContext<any>(NoteContext);
 
   const SubmitNotes = () => {
     if (note == null) return;
-    setNotes([...notes, { title, note }]);
+    setNotes([{ title, note }, ...notes]);
     setNote("");
     setTitle("");
+    goBack();
   };
 
   return (
@@ -24,7 +24,6 @@ export const AddNote = () => {
         autoFocus={true}
         placeholder={"Title"}
         onChangeText={(text) => setTitle(text)}
-        numberOfLines={1}
       />
       <TextArea
         value={note}
@@ -33,17 +32,12 @@ export const AddNote = () => {
         onChangeText={(text: string) => setNote(text)}
         numberOfLines={10}
       />
-      <Button
-        title="Submit"
-        onPress={() => {
-          SubmitNotes();
-        }}
-      />
+      <Button title="Submit" onPress={() => SubmitNotes()} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  titleStyle: { height: 100, paddingTop: 50, paddingLeft: 10, paddingRight: 5 },
-  noteStyle: { height: 500, paddingTop: 5, paddingLeft: 20, paddingRight: 20 },
+  titleStyle: { paddingTop: 50, paddingLeft: 5, paddingRight: 5 },
+  noteStyle: { height: 50, paddingTop: 5, paddingLeft: 5, paddingRight: 5 },
 });

@@ -20,7 +20,7 @@ export class TextArea extends Component {
       value,
       placeholder,
       numberOfLines = 8,
-      autoFocus = true,
+      autoFocus = false,
       onChangeText,
     } = this.props;
 
@@ -32,12 +32,6 @@ export class TextArea extends Component {
         value={value}
         placeholder={placeholder}
         onChangeText={(text) => onChangeText(text)}
-        // onContentSizeChange={(event) => {
-        //   const lines = Math.round(20 / textHeight);
-        //   const visibleLines = lines < numberOfLines ? lines : numberOfLines;
-        //   const visibleHeight = textHeight * (visibleLines + 1);
-        //   //   this.setState({ height: visibleHeight, lines: visibleLines });
-        // }}
         underlineColorAndroid="transparent"
       />
     );

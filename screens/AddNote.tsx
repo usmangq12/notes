@@ -1,23 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
-import { Button } from "@react-native-material/core";
 import { TextArea } from "../shared";
 import { NoteContext } from "../App";
+import { useNavigationState } from "@react-navigation/native";
 
-export const AddNote = ({ navigation: { goBack } }: any) => {
-  const { title, note, notes, setNotes, setTitle, setNote } =
+export const AddNote = ({ navigation }: any) => {
+  const { title, note, setTitle, setNote, setMode } =
     useContext<any>(NoteContext);
 
-  const SubmitNotes = () => {
-    if (note == null) return;
-    setNotes([{ title, note }, ...notes]);
-    setNote("");
-    setTitle("");
-    goBack();
-  };
+  const state = useNavigationState((state) => state);
+  const routeName = state.routeNames[state.index];
+
+  useEffect(() => {
+    setMode(routeName);
+  }, []);
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         value={title}
         style={styles.titleStyle}
@@ -32,12 +31,14 @@ export const AddNote = ({ navigation: { goBack } }: any) => {
         onChangeText={(text: string) => setNote(text)}
         numberOfLines={10}
       />
-      <Button title="Submit" onPress={() => SubmitNotes()} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  titleStyle: { paddingTop: 50, paddingLeft: 5, paddingRight: 5 },
+  container: {
+    height: "100%",
+  },
+  titleStyle: { paddingLeft: 5, paddingRight: 5, paddingTop: 10 },
   noteStyle: { height: 50, paddingTop: 5, paddingLeft: 5, paddingRight: 5 },
 });

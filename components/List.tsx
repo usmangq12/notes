@@ -6,7 +6,6 @@ import { NoteContext } from "../App";
 
 export const List = ({ navigation }: any) => {
   const { notes, setNotes, setTitle, setNote } = useContext<any>(NoteContext);
-  console.log("==", notes);
 
   const onDelete = (note: any) => {
     const filteredNotes = notes.filter(
@@ -32,11 +31,6 @@ export const List = ({ navigation }: any) => {
             return (
               <View style={styles.Listcontainer}>
                 <Icon name="delete" {...props} onPress={() => onDelete(note)} />
-                {/* <Icon
-                  name="lead-pencil"
-                  {...props}
-                  onPress={() => console.log("edit")}
-                /> */}
               </View>
             );
           }}

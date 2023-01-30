@@ -2,17 +2,17 @@ import React, { useContext, useEffect } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
 import { TextArea } from "../shared";
 import { NoteContext } from "../App";
-import { useNavigationState } from "@react-navigation/native";
 
-export const AddNote = ({ navigation }: any) => {
+export const AddNote = () => {
   const { title, note, setTitle, setNote, setMode } =
     useContext<any>(NoteContext);
 
-  const state = useNavigationState((state) => state);
-  const routeName = state.routeNames[state.index];
-
   useEffect(() => {
-    setMode(routeName);
+    return () => {
+      setNote("");
+      setTitle("");
+      setMode("Home");
+    };
   }, []);
 
   return (

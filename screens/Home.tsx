@@ -1,29 +1,33 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
-import { FAB } from "@react-native-material/core";
+import { FAB, Text } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { List } from "../components";
 import { NoteContext } from "../App";
-import { useNavigationState } from "@react-navigation/native";
 
 export const Home = ({ navigation }: any) => {
-  const { setMode } = useContext<any>(NoteContext);
-
-  const state = useNavigationState((state) => state);
-  const routeName = state.routeNames[state.index];
-  console.log("state", state);
-
-  useEffect(() => {
-    setMode(routeName);
-  }, [routeName]);
+  const { notes, setMode, setSelectedId, searchKeywords } =
+    useContext<any>(NoteContext);
 
   return (
     <View style={styles.container}>
-      <List navigation={navigation} />
+      {notes.length ? (
+        <List navigation={navigation} />
+      ) : (
+        searchKeywords && (
+          <View>
+            <Text variant="h6">There is no search data</Text>
+          </View>
+        )
+      )}
       <FAB
         style={styles.fabBtn}
         icon={(props) => <Icon name="plus" {...props} />}
-        onPress={() => navigation.navigate("AddNote")}
+        onPress={() => {
+          setSelectedId("");
+          setMode("AddNote");
+          navigation.navigate("AddNote");
+        }}
       />
     </View>
   );

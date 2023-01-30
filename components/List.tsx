@@ -5,18 +5,19 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { NoteContext } from "../App";
 
 export const List = ({ navigation }: any) => {
-  const { notes, setNotes, setTitle, setNote } = useContext<any>(NoteContext);
+  const { notes, setNotes, setTitle, setNote, setSelectedId, setMode } =
+    useContext<any>(NoteContext);
 
   const onDelete = (note: any) => {
-    const filteredNotes = notes.filter(
-      ({ title }: any) => title !== note.title
-    );
+    const filteredNotes = notes.filter(({ id }: any) => id !== note.id);
     setNotes(filteredNotes);
   };
 
-  const onView = ({ title, note }: any) => {
+  const onView = ({ title, note, id }: any) => {
     setTitle(title);
     setNote(note);
+    setSelectedId(id);
+    setMode("AddNote");
     navigation.navigate("AddNote");
   };
 

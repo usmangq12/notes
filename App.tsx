@@ -12,8 +12,11 @@ export const NoteContext = React.createContext(null);
 export default function App() {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
+  const [actualNotes, setActualNotes] = useState([]);
   const [notes, setNotes] = useState([]);
-  const [mode, setMode] = useState();
+  const [mode, setMode] = useState("Home");
+  const [selectedId, setSelectedId] = useState("");
+  const [searchKeywords, setSearchKeywords] = useState("");
 
   return (
     <NoteContext.Provider
@@ -25,8 +28,14 @@ export default function App() {
           setNote,
           notes,
           setNotes,
+          actualNotes,
+          setActualNotes,
           mode,
           setMode,
+          searchKeywords,
+          setSearchKeywords,
+          selectedId,
+          setSelectedId,
         } as any
       }
     >

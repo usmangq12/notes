@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -14,15 +14,16 @@ export const NavBar = () => {
     notes,
     mode,
     setNotes,
-    setNote,
-    setTitle,
     selectedId,
-    actualNotes,
     setActualNotes,
     setSearchKeywords,
   } = useContext<any>(NoteContext);
 
   const submitNote = () => {
+    navigation.goBack();
+  };
+
+  useEffect(() => {
     if (note === "" || title === "") {
       return console.log("Please add a Note");
     }
@@ -38,59 +39,75 @@ export const NavBar = () => {
       setNotes(newNotes);
       setActualNotes(newNotes);
     }
-    navigation.goBack();
+  }, [mode === "Home"]);
+
+  const cancleSearch = () => {
+    setOnSearch(false);
+    setSearchKeywords("");
   };
 
   const searchNotes = (text: string) => {
     setSearchKeywords(text);
-    let filterdNotes = [];
-    if (text !== "") {
-      filterdNotes = notes.filter(({ title }: any) =>
-        title.toLowerCase().includes(text.toLowerCase())
-      );
-    }
-    setNotes(actualNotes);
   };
 
   return (
     <View style={styles.container}>
       <AppBar
-        title="Notes"
+        color="teal"
+        title={
+          mode === "Home" ? (
+            "Notes"
+          ) : (
+            <IconButton
+              icon={(props) => (
+                <Icon
+                  name="arrow-left"
+                  {...props}
+                  onPress={() => navigation.goBack()}
+                  color="white"
+                />
+              )}
+            />
+          )
+        }
         trailing={(props) => (
           <HStack>
-            {onSearch === true && mode === "Home" ? (
-              <>
-                <TextInput
-                  style={styles.input}
-                  autoFocus={true}
-                  placeholder={"Search"}
-                  onChangeText={(text: string) => searchNotes(text)}
-                />
+            {mode === "Home" ? (
+              onSearch == true ? (
+                <>
+                  <TextInput
+                    style={styles.input}
+                    autoFocus={true}
+                    placeholder={"Search"}
+                    onChangeText={(text) => searchNotes(text)}
+                  />
 
+                  <IconButton
+                    icon={(props) => (
+                      <Icon
+                        name={"cancel"}
+                        {...props}
+                        onPress={() => cancleSearch()}
+                      />
+                    )}
+                    {...props}
+                  />
+                </>
+              ) : (
                 <IconButton
                   icon={(props) => (
                     <Icon
-                      name={"cancel"}
+                      name={"magnify"}
                       {...props}
-                      onPress={() => setOnSearch(false)}
+                      onPress={() => setOnSearch(true)}
                     />
                   )}
                   {...props}
                 />
-              </>
+              )
             ) : (
-              <IconButton
-                icon={(props) => (
-                  <Icon
-                    name={"magnify"}
-                    {...props}
-                    onPress={() => setOnSearch(true)}
-                  />
-                )}
-                {...props}
-              />
+              ""
             )}
-
             {mode === "AddNote" ? (
               <IconButton
                 icon={(props) => (

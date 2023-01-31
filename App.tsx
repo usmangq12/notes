@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home, AddNote } from "./screens";
@@ -17,6 +16,7 @@ export default function App() {
   const [mode, setMode] = useState("Home");
   const [selectedId, setSelectedId] = useState("");
   const [searchKeywords, setSearchKeywords] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <NoteContext.Provider
@@ -36,6 +36,8 @@ export default function App() {
           setSearchKeywords,
           selectedId,
           setSelectedId,
+          modalVisible,
+          setModalVisible,
         } as any
       }
     >

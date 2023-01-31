@@ -6,7 +6,7 @@ import { List } from "../components";
 import { NoteContext } from "../App";
 
 export const Home = ({ navigation }: any) => {
-  const { notes, setMode, setSelectedId, searchKeywords } =
+  const { notes, setMode, setSelectedId, searchKeywords, setNote, setTitle } =
     useContext<any>(NoteContext);
 
   return (
@@ -22,9 +22,11 @@ export const Home = ({ navigation }: any) => {
       )}
       <FAB
         style={styles.fabBtn}
-        icon={(props) => <Icon name="plus" {...props} />}
+        icon={(props) => <Icon name="plus" {...props} color="white" />}
         onPress={() => {
           setSelectedId("");
+          setNote("");
+          setTitle("");
           setMode("AddNote");
           navigation.navigate("AddNote");
         }}

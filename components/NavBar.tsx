@@ -17,6 +17,8 @@ export const NavBar = () => {
     selectedId,
     setActualNotes,
     setSearchKeywords,
+    backGroundColor,
+    setBackGroundColor,
   } = useContext<any>(NoteContext);
 
   const submitNote = () => {
@@ -25,6 +27,7 @@ export const NavBar = () => {
 
   useEffect(() => {
     if (note === "" || title === "") {
+      setBackGroundColor("");
       return console.log("Please add a Note");
     }
     if (selectedId != "") {
@@ -35,10 +38,14 @@ export const NavBar = () => {
       setActualNotes(updatedNotes);
     } else {
       const id = Math.random();
-      const newNotes = [{ id, title, note }, ...notes];
+      const newNotes = [
+        { id, title, note, background: backGroundColor },
+        ...notes,
+      ];
       setNotes(newNotes);
       setActualNotes(newNotes);
     }
+    setBackGroundColor("");
   }, [mode === "Home"]);
 
   const cancleSearch = () => {
@@ -58,15 +65,11 @@ export const NavBar = () => {
           mode === "Home" ? (
             "Notes"
           ) : (
-            <IconButton
-              icon={(props) => (
-                <Icon
-                  name="arrow-left"
-                  {...props}
-                  onPress={() => navigation.goBack()}
-                  color="white"
-                />
-              )}
+            <Icon
+              name="arrow-left"
+              onPress={() => navigation.goBack()}
+              color="white"
+              size={25}
             />
           )
         }

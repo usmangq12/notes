@@ -1,71 +1,74 @@
 import React, { useContext, useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Pressable,
+  View,
+  ScrollView,
+} from "react-native";
 import { NoteContext } from "../App";
 
 export const ColorModal = () => {
-  const { modalVisible, setModalVisible } = useContext<any>(NoteContext);
+  const { modalVisible, setModalVisible, backGroundColor, setBackGroundColor } =
+    useContext<any>(NoteContext);
+
+  const colors = [
+    "#2795ba",
+    "#e1c8c3",
+    "#d8edee",
+    "#eab676",
+    "#76b5c5",
+    "#b5ae93",
+  ];
+
+  const addColor = (color: any) => {
+    setBackGroundColor(color);
+    setModalVisible(!modalVisible);
+  };
+
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>Hello World!</Text> */}
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              {/* <Text style={styles.textStyle}>Hide Modal</Text> */}
-            </Pressable>
-          </View>
+    // <View style={styles.centeredView}>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert("Modal has been closed.");
+        setModalVisible(!modalVisible);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <ScrollView horizontal={true}>
+            {colors.map((color: any) => (
+              <Pressable
+                style={{
+                  borderRadius: 25,
+                  padding: 25,
+                  marginRight: 4,
+                  backgroundColor: color,
+                }}
+                onPress={() => addColor(color)}
+              ></Pressable>
+            ))}
+          </ScrollView>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
+    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    justifyContent: "flex-end",
   },
   modalView: {
-    // margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "lightgray",
     borderRadius: 20,
     padding: 35,
     flexDirection: "row",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    marginRight: 4,
-  },
-
-  buttonClose: {
-    backgroundColor: "#2196F3",
   },
 });

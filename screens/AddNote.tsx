@@ -10,18 +10,13 @@ export const AddNote = () => {
   const {
     title,
     note,
-    notes,
-    setNotes,
-    setActualNotes,
     setTitle,
     setNote,
-    selectedId,
-    setSelectedId,
     setMode,
-    modalVisible,
     setModalVisible,
+    backGroundColor,
   } = useContext<any>(NoteContext);
-
+  console.log("backGroundColor", backGroundColor);
   useEffect(() => {
     return () => {
       setMode("Home");
@@ -29,7 +24,7 @@ export const AddNote = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={{ height: "100%", backgroundColor: backGroundColor }}>
       <>
         <TextInput
           value={title}
@@ -51,6 +46,7 @@ export const AddNote = () => {
           icon={(props) => (
             <Icon
               name="invert-colors"
+              style={{ paddingLeft: 15 }}
               {...props}
               onPress={() => setModalVisible(true)}
               color="black"
@@ -67,7 +63,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   titleStyle: {
-    paddingLeft: 5,
+    paddingLeft: 15,
     paddingRight: 5,
     paddingTop: 10,
   },
@@ -75,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlignVertical: "top",
     paddingTop: 5,
-    paddingLeft: 5,
+    paddingLeft: 15,
     paddingRight: 5,
     marginTop: 5,
   },

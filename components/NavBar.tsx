@@ -14,8 +14,7 @@ export const NavBar = () => {
     notes,
     mode,
     setNotes,
-    selectedId,
-    setActualNotes,
+    selectedNoteId,
     setSearchKeywords,
     backGroundColor,
     setBackGroundColor,
@@ -30,12 +29,11 @@ export const NavBar = () => {
       setBackGroundColor("");
       return console.log("Please add a Note");
     }
-    if (selectedId != "") {
+    if (selectedNoteId != "") {
       const updatedNotes = notes.map((n: any) =>
-        n.id === selectedId ? { ...n, title: title, note: note } : n
+        n.id === selectedNoteId ? { ...n, title: title, note: note } : n
       );
       setNotes(updatedNotes);
-      setActualNotes(updatedNotes);
     } else {
       const id = Math.random();
       const newNotes = [
@@ -43,7 +41,6 @@ export const NavBar = () => {
         ...notes,
       ];
       setNotes(newNotes);
-      setActualNotes(newNotes);
     }
     setBackGroundColor("");
   }, [mode === "Home"]);

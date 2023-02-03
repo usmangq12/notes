@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   Alert,
   Modal,
@@ -9,18 +9,18 @@ import {
 } from "react-native";
 import { NoteContext } from "../App";
 
-export const ColorModal = () => {
-  const { modalVisible, setModalVisible, backGroundColor, setBackGroundColor } =
-    useContext<any>(NoteContext);
+const colors = [
+  "#2795ba",
+  "#e1c8c3",
+  "#d8edee",
+  "#eab676",
+  "#76b5c5",
+  "#b5ae93",
+];
 
-  const colors = [
-    "#2795ba",
-    "#e1c8c3",
-    "#d8edee",
-    "#eab676",
-    "#76b5c5",
-    "#b5ae93",
-  ];
+export const ColorModal = () => {
+  const { modalVisible, setModalVisible, setBackGroundColor } =
+    useContext<any>(NoteContext);
 
   const addColor = (color: any) => {
     setBackGroundColor(color);
@@ -28,47 +28,44 @@ export const ColorModal = () => {
   };
 
   return (
-    // <View style={styles.centeredView}>
     <Modal
       animationType="slide"
       transparent={true}
       visible={modalVisible}
+      style={styles.container}
       onRequestClose={() => {
         Alert.alert("Modal has been closed.");
         setModalVisible(!modalVisible);
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <ScrollView horizontal={true}>
-            {colors.map((color: any) => (
-              <Pressable
-                style={{
-                  borderRadius: 25,
-                  padding: 25,
-                  marginRight: 4,
-                  backgroundColor: color,
-                }}
-                onPress={() => addColor(color)}
-              ></Pressable>
-            ))}
-          </ScrollView>
-        </View>
+      <View style={styles.view}>
+        <ScrollView horizontal={true}>
+          {colors.map((color: any) => (
+            <Pressable
+              style={{ ...styles.pressableColor, backgroundColor: color }}
+              onPress={() => addColor(color)}
+            ></Pressable>
+          ))}
+        </ScrollView>
       </View>
     </Modal>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
-  centeredView: {
+  container: {
     flex: 1,
     justifyContent: "flex-end",
   },
-  modalView: {
+  view: {
     backgroundColor: "lightgray",
     borderRadius: 20,
     padding: 35,
     flexDirection: "row",
+  },
+  pressableColor: {
+    borderRadius: 25,
+    padding: 25,
+    marginRight: 4,
   },
 });

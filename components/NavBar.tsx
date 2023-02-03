@@ -45,7 +45,6 @@ export const NavBar = () => {
     }
   }, [mode === "Home"]);
 
-  console.log({ backGroundColor });
   const submitNote = () => {
     !backGroundColor && setBackGroundColor("#ffffff");
     navigation.goBack();

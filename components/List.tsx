@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Text, IconButton } from "@react-native-material/core";
+import React, { useContext } from "react";
+import { ListItem, Box, Text, IconButton } from "@react-native-material/core";
 import { View, StyleSheet } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { NoteContext } from "../App";
@@ -10,7 +10,7 @@ export const List = ({ navigation }: any) => {
     setNotes,
     setTitle,
     setNote,
-    setSelectedNoteId,
+    setSelectedId,
     setMode,
     searchKeywords,
     setBackGroundColor,
@@ -24,26 +24,37 @@ export const List = ({ navigation }: any) => {
   const onView = ({ title, note, id, background }: any) => {
     setTitle(title);
     setNote(note);
-    setSelectedNoteId(id);
+    setSelectedId(id);
     setMode("AddNote");
     setBackGroundColor(background);
     navigation.navigate("AddNote");
   };
 
-  const list = notes.filter(({ title }: any) =>
+  const searchedNotes = notes.filter(({ title }: any) =>
     title.toLowerCase().includes(searchKeywords.toLowerCase())
   );
-
+  console.log("searchedNotes: ", searchedNotes);
   return (
     <>
-      {list.map((note: any, i: number) => (
+      {searchedNotes.map((note: any, i: number) => (
         <View
-          key={i}
-          style={{ ...styles.container, backgroundColor: `${note.background}` }}
+          style={{
+            backgroundColor: `${note.background}`,
+            display: "flex",
+            flexDirection: "row",
+            paddingBottom: 10,
+            paddingTop: 10,
+            paddingLeft: 17,
+            paddingRight: 6,
+            marginBottom: 5,
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          <Text onPress={() => onView(note)} variant="body1">
+          <Text key={i} onPress={() => onView(note)} variant="body1">
             {note.title}
           </Text>
+
           <IconButton
             icon={(props) => (
               <Icon name="delete" {...props} onPress={() => onDelete(note)} />
@@ -56,18 +67,11 @@ export const List = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  Listcontainer: {
     display: "flex",
     flexDirection: "row",
-    paddingBottom: 10,
-    paddingTop: 10,
-    paddingLeft: 17,
-    paddingRight: 6,
-    marginBottom: 5,
-    alignItems: "center",
-    justifyContent: "space-between",
   },
-  item: {
+  Item: {
     backgroundColor: "green",
   },
 });

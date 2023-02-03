@@ -25,33 +25,35 @@ export const AddNote = () => {
 
   return (
     <View style={{ height: "100%", backgroundColor: backGroundColor }}>
-      <TextInput
-        value={title}
-        style={styles.titleStyle}
-        placeholder={"Title"}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <TextArea
-        value={note}
-        style={styles.noteStyle}
-        placeholder={"Note"}
-        onChangeText={(text: string) => setNote(text)}
-        numberOfLines={10}
-      />
+      <>
+        <TextInput
+          value={title}
+          style={styles.titleStyle}
+          placeholder={"Title"}
+          onChangeText={(text) => setTitle(text)}
+        />
+        <TextArea
+          value={note}
+          style={styles.noteStyle}
+          placeholder={"Note"}
+          onChangeText={(text: string) => setNote(text)}
+          numberOfLines={10}
+        />
 
-      <ColorModal />
+        <ColorModal />
 
-      <IconButton
-        icon={(props) => (
-          <Icon
-            name="invert-colors"
-            style={{ paddingLeft: 15 }}
-            {...props}
-            onPress={() => setModalVisible(true)}
-            color="black"
-          />
-        )}
-      />
+        <IconButton
+          icon={(props) => (
+            <Icon
+              name="invert-colors"
+              style={{ paddingLeft: 15 }}
+              {...props}
+              onPress={() => setModalVisible(true)}
+              color="black"
+            />
+          )}
+        />
+      </>
     </View>
   );
 };

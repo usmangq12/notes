@@ -11,9 +11,10 @@ export const NoteContext = React.createContext(null);
 export default function App() {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
+  const [actualNotes, setActualNotes] = useState([]);
   const [notes, setNotes] = useState([]);
   const [mode, setMode] = useState("Home");
-  const [selectedNoteId, setSelectedNoteId] = useState("");
+  const [selectedId, setSelectedId] = useState("");
   const [searchKeywords, setSearchKeywords] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [backGroundColor, setBackGroundColor] = useState("");
@@ -28,12 +29,14 @@ export default function App() {
           setNote,
           notes,
           setNotes,
+          actualNotes,
+          setActualNotes,
           mode,
           setMode,
           searchKeywords,
           setSearchKeywords,
-          selectedNoteId,
-          setSelectedNoteId,
+          selectedId,
+          setSelectedId,
           modalVisible,
           setModalVisible,
           backGroundColor,

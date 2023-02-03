@@ -17,6 +17,7 @@ export default function App() {
   const [searchKeywords, setSearchKeywords] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [backGroundColor, setBackGroundColor] = useState("");
+  const [viewType, setViewType] = useState("list");
 
   return (
     <NoteContext.Provider
@@ -38,6 +39,8 @@ export default function App() {
           setModalVisible,
           backGroundColor,
           setBackGroundColor,
+          viewType,
+          setViewType,
         } as any
       }
     >

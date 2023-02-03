@@ -16,15 +16,19 @@ export const AddNote = () => {
     setModalVisible,
     backGroundColor,
   } = useContext<any>(NoteContext);
-  console.log("backGroundColor", backGroundColor);
   useEffect(() => {
     return () => {
       setMode("Home");
     };
   }, []);
-
   return (
-    <View style={{ height: "100%", backgroundColor: backGroundColor }}>
+    <View
+      style={{
+        height: "100%",
+        backgroundColor: backGroundColor,
+        display: "flex",
+      }}
+    >
       <TextInput
         value={title}
         style={styles.titleStyle}

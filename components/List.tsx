@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Text, IconButton } from "@react-native-material/core";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { NoteContext } from "../App";
 
@@ -33,24 +33,30 @@ export const List = ({ navigation }: any) => {
   const list = notes.filter(({ title }: any) =>
     title.toLowerCase().includes(searchKeywords.toLowerCase())
   );
-
+  console.log({ list });
   return (
     <>
-      {list.map((note: any, i: number) => (
-        <View
-          key={i}
-          style={{ ...styles.container, backgroundColor: `${note.background}` }}
-        >
-          <Text onPress={() => onView(note)} variant="body1">
-            {note.title}
-          </Text>
-          <IconButton
-            icon={(props) => (
-              <Icon name="delete" {...props} onPress={() => onDelete(note)} />
-            )}
-          />
-        </View>
-      ))}
+      <ScrollView>
+        {list.map((note: any, i: number) => (
+          <View
+            key={i}
+            style={{ ...styles.container, backgroundColor: note.background }}
+          >
+            <Text
+              onPress={() => onView(note)}
+              variant="body1"
+              style={{ width: "86%" }}
+            >
+              {note.title}
+            </Text>
+            <IconButton
+              icon={(props) => (
+                <Icon name="delete" {...props} onPress={() => onDelete(note)} />
+              )}
+            />
+          </View>
+        ))}
+      </ScrollView>
     </>
   );
 };
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  item: {
-    backgroundColor: "green",
-  },
+  // item: {
+  //   backgroundColor: "green",
+  // },
 });

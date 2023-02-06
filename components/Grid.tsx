@@ -1,23 +1,14 @@
 import React, { useContext } from "react";
 import { Surface, Text } from "@react-native-material/core";
 import { View } from "react-native";
-import { NoteContext } from "../App";
+import { INote, NoteContext } from "../context/AppContext";
+import { IAppContext } from "../context/AppContext";
 
 const note =
   "What is your name. Where do you live. I live in Pakistan based in multan. I eat Pizzaz sometimes to get healthier.";
 const date = new Date();
 export const Grid = ({ navigation }: any) => {
-  const splicedNote = note.slice(0, 50);
-  const {
-    notes,
-    setNotes,
-    setTitle,
-    setNote,
-    setSelectedNoteId,
-    setMode,
-    searchKeywords,
-    setBackGroundColor,
-  } = useContext<any>(NoteContext);
+  const { notes } = useContext(NoteContext) as IAppContext;
   return (
     <View
       style={{
@@ -31,7 +22,7 @@ export const Grid = ({ navigation }: any) => {
         height: "auto",
       }}
     >
-      {notes.map(({ title, note }: any) => (
+      {notes.map(({ title, note }: INote) => (
         <Surface
           style={{
             width: "48%",

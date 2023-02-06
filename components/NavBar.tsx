@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { NoteContext } from "../App";
+import { IAppContext, INote, NoteContext } from "../context/AppContext";
 import { useNavigation } from "@react-navigation/native";
 
 export const NavBar = () => {
@@ -17,36 +17,33 @@ export const NavBar = () => {
     setNotes,
     selectedNoteId,
     setSearchKeywords,
-    backGroundColor,
-    setBackGroundColor,
+    background,
+    setBackground,
     viewType,
     setViewType,
-  } = useContext<any>(NoteContext);
+  } = useContext(NoteContext) as IAppContext;
 
   useEffect(() => {
-    !backGroundColor && setBackGroundColor("#ffffff");
+    !background && setBackground("#ffffff");
     if (note === "" || title === "") {
       return console.log("Please add a Note");
     }
     if (selectedNoteId != "") {
-      const updatedNotes = notes.map((n: any) =>
-        n.id === selectedNoteId
-          ? { ...n, title: title, note: note, background: backGroundColor }
+      const updatedNotes = notes.map((n: INote) =>
+        n.id.toString() === selectedNoteId
+          ? { ...n, title: title, note: note, background: background }
           : n
       );
       setNotes(updatedNotes);
     } else {
       const id = Math.random();
-      const newNotes = [
-        { id, title, note, background: backGroundColor },
-        ...notes,
-      ];
+      const newNotes = [{ id, title, note, background: background }, ...notes];
       setNotes(newNotes);
     }
   }, [mode === "Home"]);
 
   const submitNote = () => {
-    !backGroundColor && setBackGroundColor("#ffffff");
+    !background && setBackground("#ffffff");
     navigation.goBack();
   };
 
@@ -62,7 +59,7 @@ export const NavBar = () => {
   return (
     <View style={styles.container}>
       <AppBar
-        color="teal"
+        color="#0E86D4"
         title={
           mode === "Home" ? (
             "Notes"
@@ -70,7 +67,7 @@ export const NavBar = () => {
             <Icon
               name="arrow-left"
               onPress={() => navigation.goBack()}
-              color="white"
+              color="black"
               size={25}
             />
           )
@@ -152,7 +149,8 @@ export const NavBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    background: "#055C9D",
+    paddingTop: 30,
   },
   input: {
     height: 40,

@@ -1,29 +1,23 @@
 import React, { useContext } from "react";
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Pressable,
-  View,
-  ScrollView,
-} from "react-native";
-import { NoteContext } from "../App";
+import { Alert, Modal, StyleSheet, Pressable, View } from "react-native";
+import { IAppContext, NoteContext } from "../context/AppContext";
 
 const colors = [
-  "#2795ba",
-  "#e1c8c3",
-  "#d8edee",
-  "#eab676",
-  "#76b5c5",
-  "#b5ae93",
+  "#BFD7ED",
+  "#F9F1F0",
+  "#F6EEE0",
+  "#ECFDF1",
+  "#F2F1F0",
+  "#EEEDE7",
 ];
 
 export const ColorModal = () => {
-  const { modalVisible, setModalVisible, setBackGroundColor } =
-    useContext<any>(NoteContext);
+  const { modalVisible, setModalVisible, setBackground } = useContext(
+    NoteContext
+  ) as IAppContext;
 
-  const addColor = (color: any) => {
-    setBackGroundColor(color);
+  const addColor = (color: string) => {
+    setBackground(color);
     setModalVisible(!modalVisible);
   };
 
@@ -39,7 +33,7 @@ export const ColorModal = () => {
       }}
     >
       <View style={styles.view}>
-        {colors.map((color: any) => (
+        {colors.map((color: string) => (
           <Pressable
             style={{ ...styles.pressableColor, backgroundColor: color }}
             onPress={() => addColor(color)}
@@ -56,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   view: {
-    backgroundColor: "lightgray",
+    background: "lightgray",
     borderRadius: 20,
     padding: 35,
     flexDirection: "row",

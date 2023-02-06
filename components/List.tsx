@@ -1,63 +1,43 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Text, IconButton } from "@react-native-material/core";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { NoteContext } from "../App";
+import { NoteContext, INote, IAppContext } from "../context/AppContext";
 
-export const List = ({ navigation }: any) => {
-  const {
-    notes,
-    setNotes,
-    setTitle,
-    setNote,
-    setSelectedNoteId,
-    setMode,
-    searchKeywords,
-    setBackGroundColor,
-  } = useContext<any>(NoteContext);
+type IList = {
+  onDelete: (note: INote) => void;
+  onView: (note: INote) => void;
+};
 
-  const onDelete = (note: any) => {
-    const filteredNotes = notes.filter(({ id }: any) => id !== note.id);
-    setNotes(filteredNotes);
-  };
+export const List = ({ onDelete, onView }: IList) => {
+  const { notes, searchKeywords } = useContext(NoteContext) as IAppContext;
 
-  const onView = ({ title, note, id, background }: any) => {
-    setTitle(title);
-    setNote(note);
-    setSelectedNoteId(id);
-    setMode("AddNote");
-    setBackGroundColor(background);
-    navigation.navigate("AddNote");
-  };
-
-  const list = notes.filter(({ title }: any) =>
+  const list = notes.filter(({ title }: INote) =>
     title.toLowerCase().includes(searchKeywords.toLowerCase())
   );
-  console.log({ list });
+
   return (
-    <>
-      <ScrollView>
-        {list.map((note: any, i: number) => (
-          <View
-            key={i}
-            style={{ ...styles.container, backgroundColor: note.background }}
+    <ScrollView>
+      {list.map((note: INote, i: number) => (
+        <View
+          key={i}
+          style={{ ...styles.container, backgroundColor: note.background }}
+        >
+          <Text
+            onPress={() => onView(note)}
+            variant="body1"
+            style={{ width: "86%", color: "#000000" }}
           >
-            <Text
-              onPress={() => onView(note)}
-              variant="body1"
-              style={{ width: "86%" }}
-            >
-              {note.title}
-            </Text>
-            <IconButton
-              icon={(props) => (
-                <Icon name="delete" {...props} onPress={() => onDelete(note)} />
-              )}
-            />
-          </View>
-        ))}
-      </ScrollView>
-    </>
+            {note.title}
+          </Text>
+          <IconButton
+            icon={(props) => (
+              <Icon name="delete" {...props} onPress={() => onDelete(note)} />
+            )}
+          />
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -73,7 +53,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  // item: {
-  //   backgroundColor: "green",
-  // },
 });

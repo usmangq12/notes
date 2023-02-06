@@ -39,14 +39,12 @@ export const ColorModal = () => {
       }}
     >
       <View style={styles.view}>
-        <ScrollView horizontal={true}>
-          {colors.map((color: any) => (
-            <Pressable
-              style={{ ...styles.pressableColor, backgroundColor: color }}
-              onPress={() => addColor(color)}
-            ></Pressable>
-          ))}
-        </ScrollView>
+        {colors.map((color: any) => (
+          <Pressable
+            style={{ ...styles.pressableColor, backgroundColor: color }}
+            onPress={() => addColor(color)}
+          ></Pressable>
+        ))}
       </View>
     </Modal>
   );
@@ -62,6 +60,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     flexDirection: "row",
+    position: "absolute",
+    bottom: 0,
   },
   pressableColor: {
     borderRadius: 25,

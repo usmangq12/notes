@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 export const NavBar = () => {
   const navigation = useNavigation();
   const [onSearch, setOnSearch] = useState(false);
+
   const {
     note,
     title,
@@ -18,20 +19,20 @@ export const NavBar = () => {
     setSearchKeywords,
     backGroundColor,
     setBackGroundColor,
+    viewType,
+    setViewType,
   } = useContext<any>(NoteContext);
 
-  const submitNote = () => {
-    navigation.goBack();
-  };
-
   useEffect(() => {
+    !backGroundColor && setBackGroundColor("#ffffff");
     if (note === "" || title === "") {
-      setBackGroundColor("");
       return console.log("Please add a Note");
     }
     if (selectedNoteId != "") {
       const updatedNotes = notes.map((n: any) =>
-        n.id === selectedNoteId ? { ...n, title: title, note: note } : n
+        n.id === selectedNoteId
+          ? { ...n, title: title, note: note, background: backGroundColor }
+          : n
       );
       setNotes(updatedNotes);
     } else {
@@ -42,8 +43,12 @@ export const NavBar = () => {
       ];
       setNotes(newNotes);
     }
-    setBackGroundColor("");
   }, [mode === "Home"]);
+
+  const submitNote = () => {
+    !backGroundColor && setBackGroundColor("#ffffff");
+    navigation.goBack();
+  };
 
   const cancleSearch = () => {
     setOnSearch(false);
@@ -115,9 +120,26 @@ export const NavBar = () => {
                 )}
                 {...props}
               />
+            ) : viewType === "list" ? (
+              <IconButton
+                icon={(props) => (
+                  <Icon
+                    name="view-grid-outline"
+                    {...props}
+                    onPress={() => setViewType("grid")}
+                  />
+                )}
+                {...props}
+              />
             ) : (
               <IconButton
-                icon={(props) => <Icon name="dots-vertical" {...props} />}
+                icon={(props) => (
+                  <Icon
+                    name="format-list-bulleted"
+                    {...props}
+                    onPress={() => setViewType("list")}
+                  />
+                )}
                 {...props}
               />
             )}

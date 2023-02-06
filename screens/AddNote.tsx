@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
 import { TextArea } from "../shared";
-import { NoteContext } from "../App";
+import { NoteContext } from "../context/AppContext";
 import { ColorModal } from "../components";
 import { IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -14,18 +14,20 @@ export const AddNote = () => {
     setNote,
     setMode,
     setModalVisible,
-    backGroundColor,
+    background,
   } = useContext<any>(NoteContext);
+
   useEffect(() => {
     return () => {
       setMode("Home");
     };
   }, []);
+
   return (
     <View
       style={{
         height: "100%",
-        backgroundColor: backGroundColor,
+        backgroundColor: background,
         display: "flex",
       }}
     >

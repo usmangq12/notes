@@ -19,7 +19,6 @@ import { INote, NoteContext } from "../context/AppContext";
 export const Home = ({ navigation }: any) => {
   const {
     notes,
-    setNotes,
     setMode,
     setSelectedNoteId,
     searchKeywords,
@@ -30,10 +29,14 @@ export const Home = ({ navigation }: any) => {
     viewType,
   } = useContext<any>(NoteContext);
 
-  const onDelete = ({ id }: INote) => {
-    const filteredNotes = notes.filter((note: INote) => note.id !== id);
-    setNotes(filteredNotes);
-  };
+  const list = notes.filter(({ title }: INote) =>
+    title.toLowerCase().includes(searchKeywords.toLowerCase())
+  );
+
+  // const onDelete = ({ id }: INote) => {
+  //   const filteredNotes = notes.filter((note: INote) => note.id !== id);
+  //   setNotes(filteredNotes);
+  // };
 
   const onView = ({ title, note, id, background }: INote) => {
     setTitle(title);
@@ -48,9 +51,9 @@ export const Home = ({ navigation }: any) => {
     <View style={styles.container}>
       {notes.length ? (
         viewType === "list" ? (
-          <List key={background} onView={onView} onDelete={onDelete} />
+          <List list={list} onView={onView} />
         ) : (
-          <Grid key={background} onView={onView} onDelete={onDelete} />
+          <Grid list={list} onView={onView} />
         )
       ) : (
         searchKeywords && (

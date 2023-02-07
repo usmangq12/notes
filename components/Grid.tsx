@@ -37,8 +37,13 @@ export const Grid = ({ list, onView }: IGrid) => {
           >
             <Text variant="body1">{note.title}</Text>
             {note.note.length > 70 ? (
-              <Text variant="body2" color="#8F8F8F">
-                {note.note.split(" ").slice(0, 20).join(" ")}
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={3}
+                variant="body2"
+                color="#8F8F8F"
+              >
+                {note.note}
               </Text>
             ) : (
               <Text variant="body2" color="#8F8F8F">

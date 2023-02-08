@@ -22,11 +22,10 @@ export const List = ({ list, onView }: IList) => {
           <Text
             onPress={() => onView(note)}
             variant="body1"
-            style={{ width: "86%", color: "#000000" }}
+            style={{ width: "100%", color: "#000000" }}
           >
             {note.title}
           </Text>
-          <IconButton icon={(props) => <Icon name="delete" {...props} />} />
         </View>
       ))}
     </ScrollView>
@@ -42,7 +41,8 @@ const styles = StyleSheet.create({
     paddingLeft: 17,
     paddingRight: 6,
     marginBottom: 5,
+    height: 50,
     alignItems: "center",
-    justifyContent: "space-between",
+    alignContent: "center",
   },
 });

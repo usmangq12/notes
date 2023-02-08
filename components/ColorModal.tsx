@@ -22,25 +22,26 @@ export const ColorModal = () => {
   };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      style={styles.container}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        setModalVisible(!modalVisible);
-      }}
-    >
-      <View style={styles.view}>
-        {colors.map((color: string) => (
-          <Pressable
-            style={{ ...styles.pressableColor, backgroundColor: color }}
-            onPress={() => addColor(color)}
-          ></Pressable>
-        ))}
-      </View>
-    </Modal>
+    <View onTouchEnd={() => setModalVisible(false)}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        style={styles.container}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.view}>
+          {colors.map((color: string) => (
+            <Pressable
+              style={{ ...styles.pressableColor, backgroundColor: color }}
+              onPress={() => addColor(color)}
+            ></Pressable>
+          ))}
+        </View>
+      </Modal>
+    </View>
   );
 };
 
@@ -48,9 +49,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-end",
+    backgroundColor: "lightgray",
   },
   view: {
-    background: "lightgray",
+    backgroundColor: "#DDDDDD",
     borderRadius: 20,
     padding: 35,
     flexDirection: "row",

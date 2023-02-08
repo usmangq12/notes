@@ -4,6 +4,7 @@ import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { IAppContext, INote, NoteContext } from "../context/AppContext";
 import { useNavigation } from "@react-navigation/native";
+import { Menu } from "./Menu";
 
 export const NavBar = () => {
   const navigation = useNavigation();
@@ -21,6 +22,8 @@ export const NavBar = () => {
     setBackground,
     viewType,
     setViewType,
+    modalMenu,
+    setModalMenu,
   } = useContext(NoteContext) as IAppContext;
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export const NavBar = () => {
     }
     if (selectedNoteId != "") {
       const updatedNotes = notes.map((n: INote) =>
-        n.id.toString() === selectedNoteId
+        n.id.toString() === selectedNoteId.toString()
           ? { ...n, title: title, note: note, background: background }
           : n
       );
@@ -55,11 +58,10 @@ export const NavBar = () => {
   const searchNotes = (text: string) => {
     setSearchKeywords(text);
   };
-
   return (
     <View style={styles.container}>
       <AppBar
-        color="#0E86D4"
+        color="#00F4C4"
         title={
           mode === "Home" ? (
             "Notes"
@@ -108,15 +110,32 @@ export const NavBar = () => {
                 />
               )
             ) : (
-              ""
-            )}
-            {mode === "AddNote" ? (
               <IconButton
                 icon={(props) => (
                   <Icon name="check" {...props} onPress={() => submitNote()} />
                 )}
                 {...props}
               />
+            )}
+            {mode === "AddNote" ? (
+              selectedNoteId !== "" ? (
+                !modalMenu ? (
+                  <IconButton
+                    icon={(props) => (
+                      <Icon
+                        name="dots-vertical"
+                        {...props}
+                        onPress={() => setModalMenu(true)}
+                      />
+                    )}
+                    {...props}
+                  />
+                ) : (
+                  <Menu />
+                )
+              ) : (
+                ""
+              )
             ) : viewType === "list" ? (
               <IconButton
                 icon={(props) => (

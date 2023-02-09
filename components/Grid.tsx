@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
-import { Surface, Text } from "@react-native-material/core";
-import { View } from "react-native";
 import { INote, NoteContext } from "../context/AppContext";
 import { IAppContext } from "../context/AppContext";
+import { Text, Surface } from "@react-native-material/core";
+import { View, TouchableWithoutFeedback } from "react-native";
 
-const note =
-  "What is your name. Where do you live. I live in Pakistan based in multan. I eat Pizzaz sometimes to get healthier.";
-const date = new Date();
-export const Grid = ({ navigation }: any) => {
+type IGrid = {
+  list: INote[];
+  onView: (note: INote) => void;
+};
+
+export const Grid = ({ list, onView }: IGrid) => {
   const { notes } = useContext(NoteContext) as IAppContext;
   return (
     <View
       style={{
-        width: "100%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -22,21 +23,35 @@ export const Grid = ({ navigation }: any) => {
         height: "auto",
       }}
     >
-      {notes.map(({ title, note }: INote) => (
-        <Surface
-          style={{
-            width: "48%",
-            padding: 10,
-            marginTop: 12,
-            borderRadius: 5,
-            height: "auto",
-          }}
-        >
-          <Text variant="body1">{title}</Text>
-          <Text variant="body2" color="#8F8F8F">
-            {note}...
-          </Text>
-        </Surface>
+      {list.map((note: INote) => (
+        <TouchableWithoutFeedback onPress={() => onView(note)}>
+          <Surface
+            style={{
+              width: "48%",
+              padding: 10,
+              marginTop: 12,
+              borderRadius: 5,
+              height: "auto",
+              backgroundColor: note.background,
+            }}
+          >
+            <Text variant="body1">{note.title}</Text>
+            {note.note.length > 70 ? (
+              <Text
+                ellipsizeMode="tail"
+                numberOfLines={3}
+                variant="body2"
+                color="#8F8F8F"
+              >
+                {note.note}
+              </Text>
+            ) : (
+              <Text variant="body2" color="#8F8F8F">
+                {note.note}
+              </Text>
+            )}
+          </Surface>
+        </TouchableWithoutFeedback>
       ))}
     </View>
   );

@@ -5,16 +5,12 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { NoteContext, INote, IAppContext } from "../context/AppContext";
 
 type IList = {
-  onDelete: (note: INote) => void;
+  list: INote[];
   onView: (note: INote) => void;
 };
 
-export const List = ({ onDelete, onView }: IList) => {
+export const List = ({ list, onView }: IList) => {
   const { notes, searchKeywords } = useContext(NoteContext) as IAppContext;
-
-  const list = notes.filter(({ title }: INote) =>
-    title.toLowerCase().includes(searchKeywords.toLowerCase())
-  );
 
   return (
     <ScrollView>
@@ -26,15 +22,10 @@ export const List = ({ onDelete, onView }: IList) => {
           <Text
             onPress={() => onView(note)}
             variant="body1"
-            style={{ width: "86%", color: "#000000" }}
+            style={{ width: "100%", color: "#000000" }}
           >
             {note.title}
           </Text>
-          <IconButton
-            icon={(props) => (
-              <Icon name="delete" {...props} onPress={() => onDelete(note)} />
-            )}
-          />
         </View>
       ))}
     </ScrollView>
@@ -50,7 +41,8 @@ const styles = StyleSheet.create({
     paddingLeft: 17,
     paddingRight: 6,
     marginBottom: 5,
+    height: 50,
     alignItems: "center",
-    justifyContent: "space-between",
+    alignContent: "center",
   },
 });

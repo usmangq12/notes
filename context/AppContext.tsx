@@ -29,6 +29,8 @@ export type IAppContext = {
   setSelectedNoteId: Dispatch<SetStateAction<string>>;
   modalVisible: boolean;
   setModalVisible: Dispatch<SetStateAction<boolean>>;
+  modalMenu: boolean;
+  setModalMenu: Dispatch<SetStateAction<boolean>>;
   background: string;
   setBackground: Dispatch<SetStateAction<string>>;
   viewType: string;
@@ -49,6 +51,7 @@ export const AppContext = ({
   const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const [searchKeywords, setSearchKeywords] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalMenu, setModalMenu] = useState<boolean>(false);
   const [background, setBackground] = useState<string>("");
   const [viewType, setViewType] = useState<string>("list");
 
@@ -73,6 +76,8 @@ export const AppContext = ({
         setBackground,
         viewType,
         setViewType,
+        modalMenu,
+        setModalMenu,
       }}
     >
       {children}

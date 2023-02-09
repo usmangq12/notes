@@ -51,7 +51,7 @@ export const AddNote = () => {
         icon={(props) => (
           <Icon
             name="invert-colors"
-            style={{ paddingLeft: 15 }}
+            style={{ marginLeft: 20, marginBottom: 26 }}
             {...props}
             onPress={() => setModalVisible(true)}
             color="black"

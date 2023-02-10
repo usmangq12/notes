@@ -69,11 +69,12 @@ export const NavBar = () => {
             <Icon
               name="arrow-left"
               onPress={() => navigation.goBack()}
-              color="black"
+              color="white"
               size={25}
             />
           )
         }
+        tintColor="white"
         trailing={(props) => (
           <HStack>
             {mode === "Home" ? (
